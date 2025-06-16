@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  cctv-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      tags:
+        - mycctv:latest
+    
+    container_name: mycctv_container
+    ports:
+      - "6379:6379"
+      - "8080:8080"
+    volumes:
+      - /home/hprakash/projects/mycctv:/home/hprakash/projects/mycctv
+    devices:
+      - /dev/video2:/dev/video2
+    privileged: true
+    environment:
+      - PORT=8080
+      - REDIS_HOST=127.0.0.1
+      - JWT_SECRET=mycctvsecret
+    tty: true
